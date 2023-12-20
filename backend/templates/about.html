@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us </title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #3498db;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>About Us - Gaming Company</h1>
+        <p>Welcome to our startup gaming company! We are passionate about creating exciting and immersive gaming experiences for players of all ages.</p>
+        <p>Our mission is to bring joy and excitement to people's lives through innovative and entertaining games. Whether you're a casual gamer or a hardcore enthusiast, we have something special for you.</p>
+        <p>Stay tuned for upcoming game releases and join us on this thrilling journey!</p>
+
+        <a class="back-btn" href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>

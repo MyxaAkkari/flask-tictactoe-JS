@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #ccc;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .turn {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .link {
+            display: block;
+            margin: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #3498db;
+            border-radius: 5px;
+            font-size: 24px;
+            width: 80%; /* Adjust the width as needed */
+            max-width: 400px; /* Set a maximum width if desired */
+            transition: background-color 0.3s ease;
+        }
+
+        .link:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="container">
+        <div class="turn" id="turn">Player 1's turn</div>
+
+        <div id="board">
+            <!-- The board will be dynamically generated using JavaScript -->
+        </div>
+
+        <div class="error" id="error-message"></div>
+
+        <button id="new-game" onclick="startNewGame()">New Game</button>
+    </div>
+    <a class="link" href="{{ url_for('index') }}">Back to Home</a>
+
+    <script>
+
+        const board = document.getElementById("board");
+        const turnDisplay = document.getElementById("turn");
+        const errorMessage = document.getElementById("error-message");
+        const newGameButton = document.getElementById("new-game");
+
+        let state = ["", "", "", "", "", "", "", "", ""];
+        let currentPlayer = "X";
+
+        function renderBoard() {
+            board.innerHTML = "";
+            state.forEach((value, index) => {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.dataset.index = index;
+                cell.textContent = value;
+                cell.addEventListener("click", () => handleCellClick(index));
+                board.appendChild(cell);
+            });
+        }
+        function handleCellClick(index) {
+            if (state[index] === "") {
+                state[index] = currentPlayer;
+                renderBoard();
+                const gameResult = checkGameResult();
+                if (gameResult === "continue") {
+                    switchPlayerTurn();
+                    clearErrorMessage();
+                } else {
+                    handleGameEnd(gameResult);
+                }
+            } else {
+                displayErrorMessage("This cell is already occupied. Choose another one.");
+            }
+        }
+
+        function switchPlayerTurn() {
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            turnDisplay.textContent = `Player ${currentPlayer === "X" ? 1 : 2}'s turn`;
+        }
+
+        function checkGameResult() {
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            for (const combo of winningCombinations) {
+                const [a, b, c] = combo;
+                if (state[a] && state[a] === state[b] && state[a] === state[c]) {
+                    return `win${state[a]}`;
+                }
+            }
+
+            if (state.every(cell => cell !== "")) {
+                return "draw";
+            }
+
+            return "continue";
+        }
+
+        function handleGameEnd(result) {
+            if (result.startsWith("win")) {
+                const winner = result.slice(3);
+                displayErrorMessage(`Player ${winner} wins!`);
+            } else if (result === "draw") {
+                displayErrorMessage("It's a draw!");
+            }
+
+            // Disable cell clicks after the game ends
+            board.querySelectorAll(".cell").forEach(cell => {
+                cell.removeEventListener("click", () => handleCellClick(cell.dataset.index));
+            });
+
+            // Show the new game button
+            newGameButton.style.display = "block";
+        }
+
+        function displayErrorMessage(message) {
+            errorMessage.textContent = message;
+        }
+
+        function clearErrorMessage() {
+            errorMessage.textContent = "";
+        }
+        function startNewGame() {
+            // Remove event listeners from all cells
+            board.querySelectorAll(".cell").forEach(cell => {
+                cell.removeEventListener("click", handleCellClick);
+            });
+
+            // Reset state and other game variables
+            state = ["", "", "", "", "", "", "", "", ""];
+            currentPlayer = "X";
+            renderBoard();
+            clearErrorMessage();
+
+            // Add event listeners to each cell after resetting the state
+            board.querySelectorAll(".cell").forEach(cell => {
+                cell.textContent = "";
+                cell.addEventListener("click", handleCellClick);
+            });
+
+            // Hide the new game button
+            newGameButton.style.display = "none";
+
+            turnDisplay.textContent = "Player 1's turn";
+        }
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            // Initial render
+            renderBoard();
+        });
+    </script>
+</body>
+
+</html>
