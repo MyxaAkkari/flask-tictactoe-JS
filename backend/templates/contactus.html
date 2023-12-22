@@ -1,50 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us </title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-        }
-
-        #container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #3498db;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
-</head>
-<body>
-    <div id="container">
-        <h1>Contact Us - Gaming Company</h1>
-        <p>Have questions or suggestions? We'd love to hear from you!</p>
-        <p>Reach out to us via email at <a href="mailto:info@example.com">info@example.com</a></p>
-
-        <a class="back-btn" href="{{ url_for('index') }}">Back to Home</a>
-    </div>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Contact us{% endblock %}
+{% block head %}{{ super() }}{% endblock %}
+{% block content %}
+<h1>Contact Us - Gaming Company</h1>
+<p>Have questions or suggestions? We'd love to hear from you!</p>
+<p>Reach out to us via email at <a href="mailto:info@example.com">info@example.com</a></p>
+<p class="important">
+    Welcome to my awesome homepage.
+    {% endblock %}

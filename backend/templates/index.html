@@ -1,49 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cool Website</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #container {
-            text-align: center;
-        }
-
-        .link {
-            display: block;
-            margin: 10px;
-            padding: 20px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #3498db;
-            border-radius: 5px;
-            font-size: 24px;
-            width: 80%; /* Adjust the width as needed */
-            max-width: 400px; /* Set a maximum width if desired */
-            transition: background-color 0.3s ease;
-        }
-
-        .link:hover {
-            background-color: #2980b9;
-        }
-    </style>
-</head>
-<body>
-    <div id="container">
-        <a class="link" href="{{ url_for('game') }}">Game</a>
-        <a class="link" href="{{ url_for('about') }}">About</a>
-        <a class="link" href="{{ url_for('contact_us') }}">Contact</a>
-    </div>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}{{ super() }}{% endblock %}
+{% block content %}
+  <h1>homepage</h1>
+  <p class="important">
+    Welcome to my awesome homepage.
+{% endblock %}
